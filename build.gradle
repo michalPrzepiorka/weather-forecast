@@ -19,6 +19,7 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	compile group: 'org.jsoup', name: 'jsoup', version: '1.13.1'
 }
 
 test {
