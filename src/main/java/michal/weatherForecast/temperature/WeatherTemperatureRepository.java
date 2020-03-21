@@ -1,6 +1,7 @@
 package michal.weatherForecast.temperature;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Y510p
@@ -9,7 +10,6 @@ import org.springframework.data.repository.CrudRepository;
  **/
 
 public interface WeatherTemperatureRepository extends CrudRepository<WeatherTemperatureHelper, String> {
-    WeatherTemperatureHelper findFirstByCity(String city);
-
-    WeatherTemperatureHelper findFirstByCityAndTemp(String city, String temperature);
+    WeatherTemperatureHelper findFirstByCityName(String city);
+    WeatherTemperatureHelper findFirstByCityNameAndAndTemperature(String city, String temperature);
 }
