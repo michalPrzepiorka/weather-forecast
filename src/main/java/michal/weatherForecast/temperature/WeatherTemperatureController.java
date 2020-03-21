@@ -1,7 +1,11 @@
 package michal.weatherForecast.temperature;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Y510p
@@ -16,5 +20,24 @@ public class WeatherTemperatureController {
 
     public WeatherTemperatureController(WeatherTemperatureRepository weatherTemperatureRepository) {
         this.weatherTemperatureRepository = weatherTemperatureRepository;
+    }
+
+    @GetMapping
+    public Iterable<WeatherTemperatureHelper> findAllWeatherForecast() {
+        return weatherTemperatureRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Optional<WeatherTemperatureHelper> findByCityId(@PathVariable String id) {
+        return weatherTemperatureRepository.findById(id);
+    }
+
+    @GetMapping("/search")
+    public WeatherTemperatureHelper getWeatherForecastByCity(@RequestParam(required = false) String city) {
+        if (city == null) {
+            return weatherTemperatureRepository.findAll().iterator().next();
+        } else {
+            return weatherTemperatureRepository.findFirstByCityName(city);
+        }
     }
 }
