@@ -16,7 +16,7 @@ import java.util.List;
  **/
 
 public class WeatherTemperatureProvider {
-    public static List<WeatherTemperatureHelper> getCityTemperature() throws IOException {
+    public static List<WeatherTemperatureHelper> getCityTemperature() {
         final Document document;
         List<WeatherTemperatureHelper> weather = new LinkedList<>();
 
