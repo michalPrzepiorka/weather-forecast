@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  **/
 
 @Data
-@Document(collection = "city-and-temperature")
+@Document(collection = "")
 public class WeatherTemperatureHelper {
     @Id
     private String id;
