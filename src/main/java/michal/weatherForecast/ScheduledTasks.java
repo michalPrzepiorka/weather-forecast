@@ -28,6 +28,7 @@ public class ScheduledTasks {
 
     @Scheduled(fixedRate = 3600000)
     public void reportCurrentTime() {
+        repository.deleteAll();
         WeatherTemperatureProvider.getCityTemperature()
                 .stream()
                 .map(data -> new WeatherTemperatureHelper(data.getCityName(), data.getTemperature()))
