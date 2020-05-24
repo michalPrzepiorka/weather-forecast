@@ -1,5 +1,8 @@
 package michal.weatherForecast;
 
+import michal.weatherForecast.currentDate.CurrentDate;
+import michal.weatherForecast.currentDate.CurrentDateProvider;
+import michal.weatherForecast.currentDate.DateRepository;
 import michal.weatherForecast.temperature.WeatherTemperatureHelper;
 import michal.weatherForecast.temperature.WeatherTemperatureProvider;
 import michal.weatherForecast.temperature.WeatherTemperatureRepository;
@@ -26,6 +29,9 @@ public class ScheduledTasks {
     @Autowired
     private WeatherTemperatureRepository repository;
 
+    @Autowired
+    private DateRepository dateRepository;
+
     @Scheduled(fixedRate = 3600000)
     public void reportCurrentTime() {
         repository.deleteAll();
@@ -39,6 +45,13 @@ public class ScheduledTasks {
                         add = true;
                     }
                     log.info("Did we update the database: " + add);
+                });
+        dateRepository.deleteAll();
+        CurrentDateProvider.getCurrentDate()
+                .stream()
+                .map(data -> new CurrentDate(data.getDay(), data.getMonth(), data.getYear(), data.getHour(), data.getMinute()))
+                .forEach(currentDate -> {
+                    dateRepository.save(currentDate);
                 });
         log.info("The time is now {}", dateFormat.format(new Date()));
     }
