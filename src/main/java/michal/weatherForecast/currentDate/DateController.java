@@ -2,6 +2,8 @@ package michal.weatherForecast.currentDate;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.time.format.DateTimeFormatter;
+
 /**
  * @author Y510p
  * @project weatherForecast
@@ -10,8 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/date")
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:8000")
 public class DateController {
+    private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
     private DateRepository dateRepository;
 
     public DateController(DateRepository dateRepository) {
@@ -19,11 +23,16 @@ public class DateController {
     }
 
     @GetMapping("/current-date")
-    public CurrentDate getCurrentDate(@RequestParam(required = false) String date) {
-        if (date == null) {
-            return dateRepository.findAll().iterator().next();
-        } else {
-            return dateRepository.findFirstByCurrentDate(date);
+    public FetchCurrentDateResponse getCurrentDate() {
+//        if (date == null) {
+        CurrentDate currentDate = dateRepository.findAll().iterator().next();
+        if (currentDate == null) {
+            return new FetchCurrentDateResponse("No date in database...");
         }
+        String dateAsString = FORMATTER.format(currentDate.getLocalDateTime());
+        return new FetchCurrentDateResponse(dateAsString);
+//        } else {
+//            return dateRepository.findFirstByCurrentDate(date);
+//        }
     }
 }
