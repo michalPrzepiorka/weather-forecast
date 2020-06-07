@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping("/date")
-@CrossOrigin(origins = "http://localhost:8000")
+@CrossOrigin(origins = "*")
 public class DateController {
     private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
